@@ -20,6 +20,7 @@
 ## 💻 Frontend Improvements
 
 - ✅ Refactored `ItemsTable` into a reusable, generic and typed component using TanStack React Table
+- ✅ Implemented dark/light theme toggle using `next-themes` and `lucide-react`
 - ✅ Implemented server-side pagination and filtering with `page`, `limit`, and `q` query parameters
 - ✅ Created `useItems` hook using React Query with `placeholderData` for smooth transitions
 - ✅ Search is now fully server-driven (no local filtering)
