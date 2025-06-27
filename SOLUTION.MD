@@ -21,7 +21,7 @@
 
 - ✅ Refactored `ItemsTable` into a reusable, generic and typed component using TanStack React Table
 - ✅ Implemented server-side pagination and filtering with `page`, `limit`, and `q` query parameters
-- ✅ Created `usePaginatedItems` hook using React Query with `keepPreviousData` for smooth transitions
+- ✅ Created `useItems` hook using React Query with `placeholderData` for smooth transitions
 - ✅ Search is now fully server-driven (no local filtering)
 - ✅ Skeleton loaders added for a polished loading state experience
 - ✅ Pagination integrated using ShadCN UI's `Pagination`, `PaginationNext`, `PaginationPrevious`
