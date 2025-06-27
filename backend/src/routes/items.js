@@ -14,23 +14,28 @@ function readData() {
 router.get('/', (req, res, next) => {
   try {
     const data = readData();
-    const { limit, q } = req.query;
+    const { page = 1, limit = 10, q } = req.query;
     let results = data;
 
     if (q) {
-      // Simple substring search (sub‑optimal)
-      results = results.filter(item => item.name.toLowerCase().includes(q.toLowerCase()));
+      results = results.filter(item =>
+        item.name.toLowerCase().includes(q.toString().toLowerCase())
+      );
     }
 
-    if (limit) {
-      results = results.slice(0, parseInt(limit));
-    }
+    const start = (parseInt(page) - 1) * parseInt(limit);
+    const paginated = results.slice(start, start + parseInt(limit));
 
-    res.json(results);
+    res.json({
+      items: paginated,
+      total: results.length,
+    });
   } catch (err) {
     next(err);
   }
 });
+
+
 
 // GET /api/items/:id
 router.get('/:id', (req, res, next) => {
