@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow
 } from "@/components/ui/table"
+import { useDebounce } from "@/hooks/useDebounce"
 import { useItems } from "@/hooks/useItems"
 import { Item } from "@/interfaces/Item"
 import {
@@ -41,6 +42,7 @@ export function ItemsTable({
   description,
   filterColumn
 }: Props) {
+  const limit = 3
   const navigate = useNavigate()
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -49,9 +51,9 @@ export function ItemsTable({
 
   const [page, setPage] = useState(1)
   const [filter, setFilter] = useState("")
-  const limit = 3
+  const debouncedFilter = useDebounce(filter, 500)
+  const { data, isLoading } = useItems(page, limit, debouncedFilter)
 
-  const { data, isLoading } = useItems(page, limit, filter)
   const table = useReactTable({
     data: data?.items ?? [],
     columns,
@@ -138,6 +140,11 @@ export function ItemsTable({
             </div>
           )}
         </div>
+
+        <div className="flex text-sm mt-2">
+          {data?.total} items found
+        </div>
+
         <Pagination className="mt-4">
           <PaginationContent>
             <PaginationItem>
@@ -153,6 +160,7 @@ export function ItemsTable({
             </PaginationItem>
           </PaginationContent>
         </Pagination>
+
       </CardContent>
     </Card>
   )
