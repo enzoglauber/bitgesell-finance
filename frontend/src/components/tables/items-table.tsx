@@ -43,7 +43,7 @@ export function ItemsTable({
   description,
   filterColumn
 }: Props) {
-  const limit = 3
+  const limit = 5
   const navigate = useNavigate()
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])

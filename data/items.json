@@ -28,29 +28,5 @@
     "name": "Standing Desk",
     "category": "Furniture",
     "price": 1199
-  },
-  {
-    "name": "asdfasd",
-    "category": "asdfasdf",
-    "price": 0.05,
-    "id": 1751032560630
-  },
-  {
-    "name": "gasdgasd",
-    "category": "asdgasdg",
-    "price": 345343,
-    "id": 1751033132173
-  },
-  {
-    "name": "asdfasdfs",
-    "category": "asdfasdfdsa",
-    "price": 234,
-    "id": 1751034576298
-  },
-  {
-    "name": "aasdf",
-    "category": "asdfasdf",
-    "price": 2234,
-    "id": 1751034719660
   }
 ]

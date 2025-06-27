@@ -9,7 +9,7 @@ describe('GET /api/items', () => {
   it('should return an array of items inside a paginated response', async () => {
     const res = await request(app).get('/api/items');
     expect(res.statusCode).toBe(200);
-    expect(Array.isArray(res.body.items)).toBe(true); // <-- alterado
+    expect(Array.isArray(res.body.items)).toBe(true);
   });
 
   it('should filter items by search query', async () => {

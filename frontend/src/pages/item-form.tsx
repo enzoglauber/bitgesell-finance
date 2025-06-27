@@ -5,12 +5,14 @@ import { Label } from "@/components/ui/label";
 import { useCreateItem } from "@/hooks/useCreateItem";
 import { ItemFormValues, itemSchema } from "@/schemas/item.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function ItemForm() {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const form = useForm<ItemFormValues>({
     resolver: zodResolver(itemSchema),
     defaultValues: {
@@ -20,8 +22,10 @@ export default function ItemForm() {
     },
   })
 
-  const mutation = useCreateItem(() => {
+  const mutation = useCreateItem(async () => {
     toast.success("Item has been created.")
+    await queryClient.invalidateQueries({ queryKey: ["items"] })
+    await queryClient.invalidateQueries({ queryKey: ["stats"] })
     navigate("/")
   })
 

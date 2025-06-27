@@ -33,6 +33,11 @@
 - ✅ New form page `/items/new` built with accessible `Card`, `Input`, `Label`, and dynamic error messages
 - ✅ Used `react-hook-form` combined with `zod` schema and `zodResolver` for strong and scalable form validation
 - ✅ Integrated `sonner` toast system to display feedback on successful item creation
+- ✅ Created `StatsCards` component to display stats (total items, avg price, unique categories)
+- ✅ Refactored `StatsCards` to receive data via props for better reusability and separation of concerns
+- ✅ Integrated `useStats` hook with React Query and passed data to `StatsCards`
+- ✅ Ensured stats are updated in real-time by invalidating `stats` query on item creation
+- ✅ Added floating action button in `ItemsTable` for navigation to the item creation form
 
 ## 🧠 Architectural Decisions
 
