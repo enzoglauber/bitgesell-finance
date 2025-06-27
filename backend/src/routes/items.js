@@ -4,16 +4,13 @@ const path = require('path');
 const router = express.Router();
 const DATA_PATH = path.join(__dirname, '../../../data/items.json');
 
-// Utility to read data (intentionally sync to highlight blocking issue)
-function readData() {
-  const raw = fs.readFileSync(DATA_PATH);
-  return JSON.parse(raw);
-}
+const { ItemSchema } = require('../schemas/item.schema');
+const { readData, writeData } = require('../utils/file');
 
 // GET /api/items
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const data = readData();
+    const data = await readData(DATA_PATH);
     const { page = 1, limit = 10, q } = req.query;
     let results = data;
 
@@ -36,16 +33,20 @@ router.get('/', (req, res, next) => {
 });
 
 
-
 // GET /api/items/:id
-router.get('/:id', (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
-    const data = readData();
-    const item = data.find(i => i.id === parseInt(req.params.id));
+    const data = await readData(DATA_PATH);
+    const itemId = parseInt(req.params.id);
+
+    if (isNaN(itemId)) {
+      return res.status(400).json({ error: 'Invalid item ID' });
+    }
+
+    const item = data.find(i => i.id === itemId);
+
     if (!item) {
-      const err = new Error('Item not found');
-      err.status = 404;
-      throw err;
+      return res.status(404).json({ error: 'Item not found' });
     }
     res.json(item);
   } catch (err) {
@@ -54,14 +55,21 @@ router.get('/:id', (req, res, next) => {
 });
 
 // POST /api/items
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    // TODO: Validate payload (intentional omission)
-    const item = req.body;
-    const data = readData();
+    const parse = ItemSchema.safeParse(req.body);
+    if (!parse.success) {
+      return res.status(400).json({ error: 'Invalid payload', details: parse.error.issues });
+    }
+
+    const item = parse.data;
+    const data = await readData(DATA_PATH);
+
     item.id = Date.now();
     data.push(item);
-    fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2));
+
+    await writeData(DATA_PATH, data);
+
     res.status(201).json(item);
   } catch (err) {
     next(err);
