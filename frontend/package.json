@@ -12,8 +12,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.1.1",
     "@radix-ui/react-checkbox": "^1.1.4",
     "@radix-ui/react-dropdown-menu": "^2.1.6",
+    "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-progress": "^1.1.2",
     "@radix-ui/react-slot": "^1.2.3",
     "@tailwindcss/vite": "^4.0.5",
@@ -24,16 +26,20 @@
     "date-fns": "^3.6.0",
     "framer-motion": "^12.4.7",
     "lucide-react": "^0.475.0",
+    "next-themes": "^0.4.6",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.58.1",
     "react-router-dom": "^6.29.0",
     "react-virtualized-auto-sizer": "^1.0.26",
     "react-window": "^1.8.11",
     "recharts": "^2.15.1",
+    "sonner": "^2.0.5",
     "tailwind-merge": "^2.5.4",
     "tailwindcss": "^4.0.5",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

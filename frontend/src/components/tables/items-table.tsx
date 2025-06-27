@@ -26,6 +26,7 @@ import {
 } from "@tanstack/react-table"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { Button } from "../ui/button"
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "../ui/pagination"
 import { Skeleton } from "../ui/skeleton"
 
@@ -141,8 +142,15 @@ export function ItemsTable({
           )}
         </div>
 
-        <div className="flex text-sm mt-2">
-          {data?.total} items found
+        <div className="flex flex-row mt-2">
+          <div className="basis-1/2 text-sm mr-auto">
+            <span className="font-semibold">{data?.total}</span> items found
+          </div>
+          <div className="basis-2/2">
+            <Button onClick={() => navigate("/items/new")}>
+              + Add Item
+            </Button>
+          </div>
         </div>
 
         <Pagination className="mt-4">
@@ -162,6 +170,6 @@ export function ItemsTable({
         </Pagination>
 
       </CardContent>
-    </Card>
+    </Card >
   )
 }

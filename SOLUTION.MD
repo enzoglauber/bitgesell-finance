@@ -30,6 +30,9 @@
 - ✅ Folder structure organized following feature-first and component separation practices
 - ✅ Add total results indicator (e.g., "42 items found")
 - ✅ Debounce search input to reduce request frequency
+- ✅ New form page `/items/new` built with accessible `Card`, `Input`, `Label`, and dynamic error messages
+- ✅ Used `react-hook-form` combined with `zod` schema and `zodResolver` for strong and scalable form validation
+- ✅ Integrated `sonner` toast system to display feedback on successful item creation
 
 ## 🧠 Architectural Decisions
 
