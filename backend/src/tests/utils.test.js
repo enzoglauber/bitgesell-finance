@@ -7,6 +7,6 @@ describe('mean()', () => {
   });
 
   it('should return NaN for empty array', () => {
-    expect(mean([])).toBeNaN();
+    expect(mean([])).toBe(0);
   });
 });

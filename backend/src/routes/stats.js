@@ -1,23 +1,46 @@
 const express = require('express');
-const fs = require('fs');
+const fs = require('fs/promises');
+const fsWatch = require('fs');
 const path = require('path');
 const router = express.Router();
-const DATA_PATH = path.join(__dirname, '../../data/items.json');
+const DATA_PATH = path.join(__dirname, '../../../data/items.json');
+
+const { mean } = require('../utils/stats');
+
+let cachedStats = null;
+let cacheReady = false;
+
+async function calculateStats() {
+  try {
+    const raw = await fs.readFile(DATA_PATH, 'utf-8');
+    const items = JSON.parse(raw);
+
+    cachedStats = {
+      total: items.length,
+      averagePrice: mean(items.map(item => item.price))
+    };
+    cacheReady = true;
+  } catch (err) {
+    console.error('Failed to calculate stats:', err.message);
+    cachedStats = null;
+    cacheReady = false;
+  }
+}
+
+calculateStats();
+
+fsWatch.watchFile(DATA_PATH, { interval: 1000 }, () => {
+  console.log('Detected change in items.json. Recalculating stats...');
+  calculateStats();
+});
 
 // GET /api/stats
 router.get('/', (req, res, next) => {
-  fs.readFile(DATA_PATH, (err, raw) => {
-    if (err) return next(err);
+  if (!cacheReady || !cachedStats) {
+    return res.status(503).json({ error: 'Stats not ready. Try again shortly.' });
+  }
 
-    const items = JSON.parse(raw);
-    // Intentional heavy CPU calculation
-    const stats = {
-      total: items.length,
-      averagePrice: items.reduce((acc, cur) => acc + cur.price, 0) / items.length
-    };
-
-    res.json(stats);
-  });
+  res.json(cachedStats);
 });
 
 module.exports = router;

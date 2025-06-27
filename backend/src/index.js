@@ -21,6 +21,4 @@ app.use('/api/stats', statsRouter);
 // Not Found
 app.use('*', notFound);
 
-getCookie();
-
 app.listen(port, () => console.log('Backend running on http://localhost:' + port));
